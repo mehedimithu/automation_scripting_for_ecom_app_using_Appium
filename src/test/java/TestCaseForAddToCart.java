@@ -73,7 +73,7 @@ public class TestCaseForAddToCart extends TestBase {
        Thread.sleep(2000);
        placeOrder.payment(action);
        Thread.sleep(3000);
-       placeOrder.confirm();
+       placeOrder.confirm(action);
 
    }
 

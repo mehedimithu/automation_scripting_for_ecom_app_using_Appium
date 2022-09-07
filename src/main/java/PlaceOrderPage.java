@@ -30,7 +30,7 @@ public class PlaceOrderPage extends PageBase {
     WebElement selectState;
     @FindBy(xpath = "//android.widget.TextView[@index='1']")
     WebElement otherState;
-    @FindBy(xpath = "(//android.widget.TextView)[2]")
+    @FindBy(xpath = "(//android.widget.TextView)[7]")
     WebElement selectStateName;
 
     @FindBy(id = "com.nopstation.nopcommerce.nopstationcart:id/etCity")
@@ -75,6 +75,9 @@ public class PlaceOrderPage extends PageBase {
 
     @FindBy(xpath = "//android.widget.Button[@index='1']")
     WebElement confirmBtn;
+
+    @FindBy(xpath = "//android.widget.LinearLayout[@index='2']")
+    WebElement selectMethods;
     @FindBy(id = "com.nopstation.nopcommerce.nopstationcart:id/md_title_layout")
     WebElement confirmNote;
 
@@ -106,24 +109,29 @@ public class PlaceOrderPage extends PageBase {
         driver.findElement(new MobileBy.ByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"Belgium\"));"));
         selectCountry.click();
 
+        Thread.sleep(2200);
+
         tabAction(selectState, action);
 
-        if (otherState.isDisplayed()) {
+        if (selectStateName.isDisplayed()) {
+            driver.findElement(new MobileBy.ByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"Namur\"));"));
+            selectStateName.click();
+            System.out.println("selectStateName " + selectStateName.getText());
+        } else if (otherState.isDisplayed()) {
             driver.findElement(new MobileBy.ByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"Other\"));"));
             otherState.click();
-        } else {
-            driver.findElement(new MobileBy.ByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"Antwerpen\"));"));
-            selectStateName.click();
         }
+
 
         driver.hideKeyboard();
 
-        clear(setCompanyName);
-        tabAction(setCompanyName, action);
+    clear(setCompanyName);
+
+    tabAction(setCompanyName, action);
         setCompanyName.sendKeys("Riseup Labs");
         driver.hideKeyboard();
 
-        clear(setCityName);
+    clear(setCityName);
         tabAction(setCityName, action);
         setCityName.sendKeys("Antwerpen");
         driver.hideKeyboard();
@@ -162,18 +170,20 @@ public class PlaceOrderPage extends PageBase {
 
         driver.findElement(MobileBy.AndroidUIAutomator(
                 "new UiScrollable(new UiSelector()).scrollIntoView(text(\"Check / Money Order\"));"));
+        // tabAction(selectMethods, action);
+        Thread.sleep(1000);
         btnPayment.click();
-        Thread.sleep(8000);
-        waitForVisibility(nextBtn);
-        nextBtn.click();
+//        Thread.sleep(10000);
+//        nextBtn.click();
     }
 
-    public void confirm() throws InterruptedException {
+    public void confirm(AndroidTouchAction action) throws InterruptedException {
 
         Thread.sleep(1000);
-        double totalAmount = 0;
-        driver.findElement(MobileBy.AndroidUIAutomator(
-                "new UiScrollable(new UiSelector()).scrollIntoView(text(\"Sub-Total\"));"));
+        //scrollingAction(driver, action, 0.75, 0.02);
+        scrollDown();
+        //driver.findElement(MobileBy.AndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"Sub-Total\"));"));
+       /* double totalAmount = 0;
         String amounts = subTotal.getText();
         String charge = shippingCharge.getText();
         Double subtotalPrice = formattedAmount(amounts);
@@ -181,7 +191,7 @@ public class PlaceOrderPage extends PageBase {
         totalAmount = subtotalPrice + chargeAmount;
         System.out.println(totalAmount);
 
-        Assert.assertEquals(totalAmount, total);
+        Assert.assertEquals(totalAmount, total);*/
         confirmBtn.click();
 
         Thread.sleep(2000);
