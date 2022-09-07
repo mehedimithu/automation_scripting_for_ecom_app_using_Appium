@@ -65,8 +65,7 @@ public class PlaceOrderPage extends PageBase {
         tabAction(setEmail, action);
         setEmail.sendKeys("m.mehedi@riseuplabs.com");
 
-
-
+        driver.hideKeyboard();
 
         scrollingAction(driver, action, 0.100, 0.01);
         Thread.sleep(3000);

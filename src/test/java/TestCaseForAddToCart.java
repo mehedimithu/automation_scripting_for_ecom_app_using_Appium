@@ -17,7 +17,6 @@ public class TestCaseForAddToCart extends TestBase {
     PlaceOrderPage placeOrder;
 
 
-
     @Test(priority = 1)
     public void productAddToCart() throws InterruptedException {
         addToCart = new AddProductsToCartPage(driver);
