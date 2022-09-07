@@ -67,7 +67,8 @@ public class PlaceOrderPage extends PageBase {
 
         driver.hideKeyboard();
 
-        scrollingAction(driver, action, 0.100, 0.01);
+        //scrollingAction(driver, action, 0.100, 0.01);
+        scrollToEnd();
         Thread.sleep(3000);
 
         clear(setCompanyName);
@@ -79,7 +80,7 @@ public class PlaceOrderPage extends PageBase {
         tabAction(setCityName, action);
         setCityName.sendKeys("Dhaka");
 
-        scrollToEnd();
+
 
 
         clear(setStreetAddress);
