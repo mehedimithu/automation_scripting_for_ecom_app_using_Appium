@@ -22,27 +22,26 @@ public class TestCaseForAddToCart extends TestBase {
         addToCart = new AddProductsToCartPage(driver);
         action = new AndroidTouchAction(driver);
 
-
-        Thread.sleep(5000);
+        Thread.sleep(6000);
 
         addToCart.clickAccept();
-        Thread.sleep(5000);
+        Thread.sleep(6000);
 
         addToCart.swipeLeft(action);
-        Thread.sleep(1000);
+        Thread.sleep(2000);
 
         addToCart.scrollDown(driver, action);
-        Thread.sleep(1000);
+        Thread.sleep(3000);
 
         addToCart.pressedItem(driver, action);
 
         addToCart.getSizeAndQuantity(action);
 
         addToCart.charBtn(action);
-        Thread.sleep(1000);
+        Thread.sleep(2000);
 
         addToCart.checkOut(action);
-        Thread.sleep(1000);
+        Thread.sleep(2000);
 
 
     }
@@ -63,12 +62,19 @@ public class TestCaseForAddToCart extends TestBase {
     public void TestCaseForPlaceOrder() throws InterruptedException {
 
        placeOrder = new PlaceOrderPage(driver);
-        action = new AndroidTouchAction(driver);
+       action = new AndroidTouchAction(driver);
 
-        Thread.sleep(1000);
-        placeOrder.guestMode(action);
-        Thread.sleep(1000);
-        placeOrder.setAddress(action);
-    }
+       Thread.sleep(2000);
+       placeOrder.guestMode(action);
+       Thread.sleep(2000);
+       placeOrder.setAddress(action);
+       Thread.sleep(2000);
+       placeOrder.shippingDetails(action);
+       Thread.sleep(2000);
+       placeOrder.payment(action);
+       Thread.sleep(3000);
+       placeOrder.confirm();
+
+   }
 
 }

@@ -21,7 +21,7 @@ public class PageBase {
     AppiumDriver driver;
     WebDriverWait wait;
 
-     boolean canScrollMore;
+    public boolean canScrollMore;
 
     public PageBase(AppiumDriver driver) {
 
@@ -113,5 +113,10 @@ public class PageBase {
                 .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(5)))
                 .moveTo(PointOption.point(0, scrollEnd))
                 .release().perform();
+    }
+
+    public Double  formattedAmount(String amount){
+        Double totalPrice = Double.parseDouble(amount.substring(1));
+        return totalPrice;
     }
 }

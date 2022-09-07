@@ -54,7 +54,7 @@ public class TestBase {
     @AfterClass
     public void tearDown() {
         if (null != driver) {
-           driver.quit();
+//           driver.quit();
         }
 
         //Appium server stopped

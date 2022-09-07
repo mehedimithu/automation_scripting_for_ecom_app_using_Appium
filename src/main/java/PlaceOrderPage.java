@@ -1,9 +1,9 @@
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.android.AndroidTouchAction;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.testng.Assert;
 
 
 public class PlaceOrderPage extends PageBase {
@@ -30,6 +30,8 @@ public class PlaceOrderPage extends PageBase {
     WebElement selectState;
     @FindBy(xpath = "//android.widget.TextView[@index='1']")
     WebElement otherState;
+    @FindBy(xpath = "(//android.widget.TextView)[2]")
+    WebElement selectStateName;
 
     @FindBy(id = "com.nopstation.nopcommerce.nopstationcart:id/etCity")
     WebElement setCityName;
@@ -48,11 +50,41 @@ public class PlaceOrderPage extends PageBase {
     @FindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/androidx.drawerlayout.widget.DrawerLayout/android.widget.RelativeLayout/android.widget.FrameLayout[1]/android.widget.RelativeLayout[2]/android.widget.FrameLayout[2]/android.view.ViewGroup[1]/android.widget.RelativeLayout/android.widget.RelativeLayout/android.widget.ScrollView/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.LinearLayout[3]/android.widget.FrameLayout/android.widget.EditText")
     WebElement setEmail;
 
+    @FindBy(xpath = "//android.widget.RelativeLayout[@index='3']")
+    WebElement shippingMethod;
+
+    @FindBy(id = "com.nopstation.nopcommerce.nopstationcart:id/btnContinue")
+    WebElement contBtn;
+
+    @FindBy(xpath = "//android.widget.RelativeLayout[@index='4']")
+    WebElement selectPayment;
+    @FindBy(xpath = "//android.widget.Button[@text='CONTINUE']")
+    WebElement btnPayment;
+    @FindBy(xpath = "//android.view.View[@text='Payment information']")
+    WebElement paymentInfo;
+    @FindBy(xpath = "//android.widget.Button[@index='0']")
+    WebElement nextBtn;
+    @FindBy(id = "com.nopstation.nopcommerce.nopstationcart:id/tvSubTotal")
+    WebElement subTotal;
+
+    @FindBy(id = "com.nopstation.nopcommerce.nopstationcart:id/tvShippingCharge")
+    WebElement shippingCharge;
+
+    @FindBy(id = "com.nopstation.nopcommerce.nopstationcart:id/tvTotal")
+    WebElement total;
+
+    @FindBy(xpath = "//android.widget.Button[@index='1']")
+    WebElement confirmBtn;
+    @FindBy(id = "com.nopstation.nopcommerce.nopstationcart:id/md_title_layout")
+    WebElement confirmNote;
+
+    @FindBy(id = "com.nopstation.nopcommerce.nopstationcart:id/md_text_message")
+    WebElement popupMessage;
+
 
     public void guestMode(AndroidTouchAction action) {
         waitForVisibility(checkoutBtnAsGuest);
         click(checkoutBtnAsGuest);
-       // tabAction(checkoutBtnAsGuest, action);
 
     }
 
@@ -71,48 +103,93 @@ public class PlaceOrderPage extends PageBase {
         driver.hideKeyboard();
 
         tabAction(countrySpinner, action);
-        driver.findElement(new MobileBy.ByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"Bangladesh\"));"));
+        driver.findElement(new MobileBy.ByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"Belgium\"));"));
         selectCountry.click();
-        Thread.sleep(1000);
 
-        tabAction(selectState,action);
-        driver.findElement(new MobileBy.ByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"Other\"));"));
-        otherState.click();
+        tabAction(selectState, action);
 
+        if (otherState.isDisplayed()) {
+            driver.findElement(new MobileBy.ByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"Other\"));"));
+            otherState.click();
+        } else {
+            driver.findElement(new MobileBy.ByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"Antwerpen\"));"));
+            selectStateName.click();
+        }
 
-
+        driver.hideKeyboard();
 
         clear(setCompanyName);
         tabAction(setCompanyName, action);
         setCompanyName.sendKeys("Riseup Labs");
         driver.hideKeyboard();
 
-
         clear(setCityName);
         tabAction(setCityName, action);
-        setCityName.sendKeys("Dhaka");
+        setCityName.sendKeys("Antwerpen");
         driver.hideKeyboard();
 
         clear(setStreetAddress);
         tabAction(setStreetAddress, action);
-        setStreetAddress.sendKeys("Dhaka");
+        setStreetAddress.sendKeys("Antwerpen" + " " + "Belgium");
         driver.hideKeyboard();
-
 
         clear(setZipCode);
         tabAction(setZipCode, action);
-        setZipCode.sendKeys("1207");
+        setZipCode.sendKeys("79070");
         driver.hideKeyboard();
-
 
         clear(setPhone);
         tabAction(setPhone, action);
-        setPhone.sendKeys("01755525571");
+        setPhone.sendKeys("+3299795723975");
         driver.hideKeyboard();
 
         Thread.sleep(2000);
         tabAction(btnContinue, action);
+        Thread.sleep(2000);
 
+    }
+
+
+    public void shippingDetails(AndroidTouchAction action) {
+        tabAction(shippingMethod, action);
+        scrollingAction(driver, action, 0.90, 0.02);
+        contBtn.click();
+
+    }
+
+    public void payment(AndroidTouchAction action) throws InterruptedException {
+        tabAction(selectPayment, action);
+
+        driver.findElement(MobileBy.AndroidUIAutomator(
+                "new UiScrollable(new UiSelector()).scrollIntoView(text(\"Check / Money Order\"));"));
+        btnPayment.click();
+        Thread.sleep(8000);
+        waitForVisibility(nextBtn);
+        nextBtn.click();
+    }
+
+    public void confirm() throws InterruptedException {
+
+        Thread.sleep(1000);
+        double totalAmount = 0;
+        driver.findElement(MobileBy.AndroidUIAutomator(
+                "new UiScrollable(new UiSelector()).scrollIntoView(text(\"Sub-Total\"));"));
+        String amounts = subTotal.getText();
+        String charge = shippingCharge.getText();
+        Double subtotalPrice = formattedAmount(amounts);
+        Double chargeAmount = formattedAmount(charge);
+        totalAmount = subtotalPrice + chargeAmount;
+        System.out.println(totalAmount);
+
+        Assert.assertEquals(totalAmount, total);
+        confirmBtn.click();
+
+        Thread.sleep(2000);
+
+        String note = popupMessage.getText();
+        System.out.println(note);
+        String thanksNote = confirmNote.getText();
+        Assert.assertEquals(thanksNote, "Thank you");
 
     }
 
