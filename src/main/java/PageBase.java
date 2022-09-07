@@ -56,7 +56,7 @@ public class PageBase {
         int sixElementXCoordinate = desireElement.getLocation().x;
 
         action.press(PointOption.point(sixElementXCoordinate, midOfYCoordinate))
-                .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(10)))
+                .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(15)))
                 .moveTo(PointOption.point(firstElementXCoordinate, midOfYCoordinate))
                 .release().perform();
 

@@ -51,7 +51,8 @@ public class AddProductsToCartPage extends PageBase {
 
     public void swipeLeft(AndroidTouchAction action) {
         swipeAction(action);
-        action.tap(ElementOption.element(selectProductItem)).perform();
+        tabAction(selectProductItem, action);
+      //  action.tap(ElementOption.element(selectProductItem)).perform();
 
     }
 

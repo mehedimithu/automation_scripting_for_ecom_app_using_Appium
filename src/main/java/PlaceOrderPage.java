@@ -1,4 +1,5 @@
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidTouchAction;
 import org.openqa.selenium.By;
@@ -23,6 +24,9 @@ public class PlaceOrderPage extends PageBase {
     @FindBy(id = "com.nopstation.nopcommerce.nopstationcart:id/etCompanyName")
     WebElement setCompanyName;
 
+    @FindBy(id = "com.nopstation.nopcommerce.nopstationcart:id/countrySpinner")
+    WebElement countrySpinner;
+
     @FindBy(id = "com.nopstation.nopcommerce.nopstationcart:id/etCity")
     WebElement setCityName;
     @FindBy(id = "com.nopstation.nopcommerce.nopstationcart:id/etStreetAddress")
@@ -42,8 +46,9 @@ public class PlaceOrderPage extends PageBase {
 
 
     public void guestMode(AndroidTouchAction action) {
-        //  waitForVisibility(checkoutBtnAsGuest);
-        tabAction(checkoutBtnAsGuest, action);
+        waitForVisibility(checkoutBtnAsGuest);
+        click(checkoutBtnAsGuest);
+       // tabAction(checkoutBtnAsGuest, action);
 
     }
 
@@ -61,15 +66,10 @@ public class PlaceOrderPage extends PageBase {
         setEmail.sendKeys("m.mehedi@riseuplabs.com");
 
 
-        List<MobileElement> dropdownItems = driver.findElements(By.xpath("com.nopstation.nopcommerce.nopstationcart:id/countrySpinner"));
-        dropdownItems.get(1).click();
-        Thread.sleep(2000);
 
-        List<MobileElement> stateList = driver.findElementsById("com.nopstation.nopcommerce.nopstationcart:id/stateSpinner");
-        stateList.get(0).click();
 
         scrollingAction(driver, action, 0.100, 0.01);
-        Thread.sleep(2000);
+        Thread.sleep(3000);
 
         clear(setCompanyName);
         tabAction(setCompanyName, action);
