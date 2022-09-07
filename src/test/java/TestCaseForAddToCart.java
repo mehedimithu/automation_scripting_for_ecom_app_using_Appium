@@ -13,7 +13,6 @@ import org.testng.annotations.Test;
 
 public class TestCaseForAddToCart extends TestBase {
     AddProductsToCartPage addToCart;
-    TestCaseForPlaceOrder testCaseForPlaceOrder;
 
     PlaceOrderPage placeOrder;
 
@@ -23,7 +22,7 @@ public class TestCaseForAddToCart extends TestBase {
     public void productAddToCart() throws InterruptedException {
         addToCart = new AddProductsToCartPage(driver);
         action = new AndroidTouchAction(driver);
-        testCaseForPlaceOrder = new TestCaseForPlaceOrder();
+
 
         Thread.sleep(5000);
 
@@ -62,7 +61,7 @@ public class TestCaseForAddToCart extends TestBase {
         And: Verify order place successfully with popup message "Your order has been successfully processed!"*/
 
    @Test(priority = 2)
-    public void placeOrder() throws InterruptedException {
+    public void TestCaseForPlaceOrder() throws InterruptedException {
 
        placeOrder = new PlaceOrderPage(driver);
         action = new AndroidTouchAction(driver);
