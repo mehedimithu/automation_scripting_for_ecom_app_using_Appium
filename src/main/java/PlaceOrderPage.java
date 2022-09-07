@@ -1,12 +1,9 @@
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
-import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidTouchAction;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-
-import java.util.List;
 
 
 public class PlaceOrderPage extends PageBase {
@@ -26,6 +23,13 @@ public class PlaceOrderPage extends PageBase {
 
     @FindBy(id = "com.nopstation.nopcommerce.nopstationcart:id/countrySpinner")
     WebElement countrySpinner;
+
+    @FindBy(xpath = "(//android.widget.TextView[@resource-id='android:id/text1'])[12]")
+    WebElement selectCountry;
+    @FindBy(xpath = "//android.widget.LinearLayout[@index='4']")
+    WebElement selectState;
+    @FindBy(xpath = "//android.widget.TextView[@index='1']")
+    WebElement otherState;
 
     @FindBy(id = "com.nopstation.nopcommerce.nopstationcart:id/etCity")
     WebElement setCityName;
@@ -64,10 +68,18 @@ public class PlaceOrderPage extends PageBase {
         clear(setEmail);
         tabAction(setEmail, action);
         setEmail.sendKeys("m.mehedi@riseuplabs.com");
-
         driver.hideKeyboard();
 
-        //scrollingAction(driver, action, 0.100, 0.01);
+        tabAction(countrySpinner, action);
+        driver.findElement(new MobileBy.ByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"Bangladesh\"));"));
+        selectCountry.click();
+        Thread.sleep(1000);
+
+        tabAction(selectState,action);
+        driver.findElement(new MobileBy.ByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"Other\"));"));
+        otherState.click();
+
+
 
 
         clear(setCompanyName);
@@ -75,8 +87,6 @@ public class PlaceOrderPage extends PageBase {
         setCompanyName.sendKeys("Riseup Labs");
         driver.hideKeyboard();
 
-       /* scrollToEnd();
-        Thread.sleep(1000);*/
 
         clear(setCityName);
         tabAction(setCityName, action);
