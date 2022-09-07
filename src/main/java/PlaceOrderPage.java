@@ -68,34 +68,37 @@ public class PlaceOrderPage extends PageBase {
         driver.hideKeyboard();
 
         //scrollingAction(driver, action, 0.100, 0.01);
-        scrollToEnd();
-        Thread.sleep(3000);
+
 
         clear(setCompanyName);
         tabAction(setCompanyName, action);
         setCompanyName.sendKeys("Riseup Labs");
+        driver.hideKeyboard();
 
+       /* scrollToEnd();
+        Thread.sleep(1000);*/
 
         clear(setCityName);
         tabAction(setCityName, action);
         setCityName.sendKeys("Dhaka");
-
-
-
+        driver.hideKeyboard();
 
         clear(setStreetAddress);
         tabAction(setStreetAddress, action);
         setStreetAddress.sendKeys("Dhaka");
+        driver.hideKeyboard();
 
 
         clear(setZipCode);
         tabAction(setZipCode, action);
         setZipCode.sendKeys("1207");
+        driver.hideKeyboard();
 
 
         clear(setPhone);
         tabAction(setPhone, action);
         setPhone.sendKeys("01755525571");
+        driver.hideKeyboard();
 
         Thread.sleep(2000);
         tabAction(btnContinue, action);
