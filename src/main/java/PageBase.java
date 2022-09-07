@@ -1,3 +1,4 @@
+import com.google.common.collect.ImmutableMap;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
@@ -7,6 +8,7 @@ import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.ElementOption;
 import io.appium.java_client.touch.offset.PointOption;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -18,6 +20,8 @@ import java.util.List;
 public class PageBase {
     AppiumDriver driver;
     WebDriverWait wait;
+
+     boolean canScrollMore;
 
     public PageBase(AppiumDriver driver) {
 
@@ -79,6 +83,22 @@ public class PageBase {
     }
 
 
+
+    public void scrollToEnd() {
+        do {
+            canScrollMore = (Boolean) ((JavascriptExecutor) driver).executeScript("mobile: scrollGesture",
+                    ImmutableMap.builder()
+                            .put("left", 100)
+                            .put("top", 100)
+                            .put("width", 200)
+                            .put("height", 200)
+                            .put("direction", "down")
+                            .put("percent", 3.0)
+                            .build());
+
+
+        } while (canScrollMore);
+    }
     public void scrollDown() {
         driver.findElement(MobileBy.AndroidUIAutomator(
                 "new UiScrollable(new UiSelector()).scrollIntoView(text(\"Nokia Lumia 1020\"));"));

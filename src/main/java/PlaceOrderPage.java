@@ -74,9 +74,12 @@ public class PlaceOrderPage extends PageBase {
         tabAction(setCompanyName, action);
         setCompanyName.sendKeys("Riseup Labs");
 
+
         clear(setCityName);
         tabAction(setCityName, action);
         setCityName.sendKeys("Dhaka");
+
+        scrollToEnd();
 
 
         clear(setStreetAddress);
