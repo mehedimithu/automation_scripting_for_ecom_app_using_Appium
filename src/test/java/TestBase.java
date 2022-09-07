@@ -1,25 +1,30 @@
+import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.Activity;
-import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.AndroidTouchAction;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import org.openqa.selenium.DeviceRotation;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 public class TestBase {
-    public AndroidDriver driver;
+    public AppiumDriver driver;
 
+    public AndroidTouchAction action;
     public AppiumDriverLocalService service;
-    public DesiredCapabilities capabilities;
+
+    public DesiredCapabilities caps;
     public boolean canScrollMore;
     public DeviceRotation deviceRotation;
     public Activity activity;
 
-    @BeforeTest
+    @BeforeClass
     public void Android_SetUp() throws MalformedURLException {
 
       /*  service = new AppiumServiceBuilder()
@@ -28,28 +33,30 @@ public class TestBase {
         //Appium Server start
         service.start();*/
 
-        capabilities = new DesiredCapabilities();
+        caps = new DesiredCapabilities();
 
         URL uri = new URL("http://127.0.0.1:4723/wd/hub/");
 
-        capabilities.setCapability("platformName", "Android");
-        capabilities.setCapability("platformVersion", "12");
-        capabilities.setCapability("deviceName", "sdk_gphone64_arm64");
-        capabilities.setCapability("automationName", "UiAutomator2");
-        capabilities.setCapability("app",
-                System.getProperty("user.dir") + "sources_file/nopstationCart_4.40.apk");
+        caps.setCapability("platformName", "Android");
+        caps.setCapability("platformVersion", "12");
+        caps.setCapability("deviceName", "sdk_gphone64_arm64");
+        caps.setCapability("automationName", "UiAutomator2");
+        caps.setCapability("app", System.getProperty("user.dir") + "/sources_file/nopstationCart_4.40.apk");
 
         /*caps.setCapability("appPackage", "io.appium.android.apis");
         caps.setCapability("appActivity", ".ApiDemos");*/
 
-        driver = new AndroidDriver(uri, capabilities);
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver = new AppiumDriver(uri, caps);
+        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 
     }
 
-    @AfterTest
+    @AfterClass
     public void tearDown() {
-        driver.quit();
+        if (null != driver) {
+           driver.quit();
+        }
+
         //Appium server stopped
         //service.stop();
     }
