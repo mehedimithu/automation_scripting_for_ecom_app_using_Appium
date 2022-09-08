@@ -110,7 +110,7 @@ public class PageBase {
         int scrollStart = (int) (dimension.getHeight() * start);
         int scrollEnd = (int) (dimension.getHeight() * end);
         action.press(PointOption.point(0, scrollStart))
-                .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(5)))
+                .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(10)))
                 .moveTo(PointOption.point(0, scrollEnd))
                 .release().perform();
     }

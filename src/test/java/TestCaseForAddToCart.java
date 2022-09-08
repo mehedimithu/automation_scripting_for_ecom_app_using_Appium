@@ -43,6 +43,7 @@ public class TestCaseForAddToCart extends TestBase {
         addToCart.checkOut(action);
         Thread.sleep(2000);
 
+        System.out.println("Test Case For  Product Add To Cart Passed!");
 
     }
 

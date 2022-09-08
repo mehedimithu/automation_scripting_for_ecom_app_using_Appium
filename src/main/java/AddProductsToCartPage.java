@@ -3,7 +3,6 @@ import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.android.AndroidTouchAction;
 import io.appium.java_client.pagefactory.AndroidFindBy;
-import io.appium.java_client.touch.offset.ElementOption;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -42,7 +41,6 @@ public class AddProductsToCartPage extends PageBase {
     WebElement cartPage;
 
 
-
     public void clickAccept() {
        // waitForVisibility(acceptBtn);
         click(acceptBtn);
@@ -52,8 +50,6 @@ public class AddProductsToCartPage extends PageBase {
     public void swipeLeft(AndroidTouchAction action) {
         swipeAction(action);
         tabAction(selectProductItem, action);
-      //  action.tap(ElementOption.element(selectProductItem)).perform();
-
     }
 
     public void scrollDown(AppiumDriver driver, AndroidTouchAction action) {
@@ -62,7 +58,6 @@ public class AddProductsToCartPage extends PageBase {
     }
 
     public void pressedItem(AppiumDriver driver, AndroidTouchAction action) {
-
         tabAction(clickOnLumia, action);
     }
 
@@ -85,7 +80,6 @@ public class AddProductsToCartPage extends PageBase {
 
     public  void  checkOut(AndroidTouchAction action){
         tabAction(getCheckout, action);
-
     }
 
 

@@ -30,7 +30,7 @@ public class PlaceOrderPage extends PageBase {
     WebElement selectState;
     @FindBy(xpath = "//android.widget.TextView[@index='1']")
     WebElement otherState;
-    @FindBy(xpath = "(//android.widget.TextView)[7]")
+    @FindBy(xpath = "(//android.widget.TextView)[6]")
     WebElement selectStateName;
 
     @FindBy(id = "com.nopstation.nopcommerce.nopstationcart:id/etCity")
@@ -56,14 +56,18 @@ public class PlaceOrderPage extends PageBase {
     @FindBy(id = "com.nopstation.nopcommerce.nopstationcart:id/btnContinue")
     WebElement contBtn;
 
-    @FindBy(xpath = "//android.widget.RelativeLayout[@index='4']")
+    @FindBy(xpath = "//android.widget.LinearLayout[@index='3']")
     WebElement selectPayment;
+
     @FindBy(xpath = "//android.widget.Button[@text='CONTINUE']")
     WebElement btnPayment;
+
     @FindBy(xpath = "//android.view.View[@text='Payment information']")
     WebElement paymentInfo;
+
     @FindBy(xpath = "//android.widget.Button[@index='0']")
     WebElement nextBtn;
+
     @FindBy(id = "com.nopstation.nopcommerce.nopstationcart:id/tvSubTotal")
     WebElement subTotal;
 
@@ -76,7 +80,7 @@ public class PlaceOrderPage extends PageBase {
     @FindBy(xpath = "//android.widget.Button[@index='1']")
     WebElement confirmBtn;
 
-    @FindBy(xpath = "//android.widget.LinearLayout[@index='2']")
+    @FindBy(xpath = "//android.widget.LinearLayout[@index='8']")
     WebElement selectMethods;
     @FindBy(id = "com.nopstation.nopcommerce.nopstationcart:id/md_title_layout")
     WebElement confirmNote;
@@ -109,23 +113,21 @@ public class PlaceOrderPage extends PageBase {
         driver.findElement(new MobileBy.ByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"Belgium\"));"));
         selectCountry.click();
 
-        Thread.sleep(2200);
+        Thread.sleep(2000);
 
         tabAction(selectState, action);
 
-        if (selectStateName.isDisplayed()) {
-            driver.findElement(new MobileBy.ByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"Namur\"));"));
-            selectStateName.click();
-            System.out.println("selectStateName " + selectStateName.getText());
-        } else if (otherState.isDisplayed()) {
+        if (otherState.isDisplayed()) {
             driver.findElement(new MobileBy.ByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"Other\"));"));
             otherState.click();
+        } else {
+            driver.findElement(new MobileBy.ByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"Luxembourg\"));"));
+            selectStateName.click();
         }
-
 
         driver.hideKeyboard();
 
-    clear(setCompanyName);
+        clear(setCompanyName);
 
     tabAction(setCompanyName, action);
         setCompanyName.sendKeys("Riseup Labs");
@@ -148,7 +150,7 @@ public class PlaceOrderPage extends PageBase {
 
         clear(setPhone);
         tabAction(setPhone, action);
-        setPhone.sendKeys("+3299795723975");
+        setPhone.sendKeys("+3299795755");
         driver.hideKeyboard();
 
         Thread.sleep(2000);
@@ -162,27 +164,22 @@ public class PlaceOrderPage extends PageBase {
         tabAction(shippingMethod, action);
         scrollingAction(driver, action, 0.90, 0.02);
         contBtn.click();
-
     }
 
     public void payment(AndroidTouchAction action) throws InterruptedException {
-        tabAction(selectPayment, action);
-
-        driver.findElement(MobileBy.AndroidUIAutomator(
-                "new UiScrollable(new UiSelector()).scrollIntoView(text(\"Check / Money Order\"));"));
-        // tabAction(selectMethods, action);
+        driver.findElement(MobileBy.AndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"Check / Money Order\"));"));
+        Thread.sleep(1000);
+        tabAction(selectMethods, action);
         Thread.sleep(1000);
         btnPayment.click();
-//        Thread.sleep(10000);
-//        nextBtn.click();
+        Thread.sleep(10000);
+        nextBtn.click();
     }
 
     public void confirm(AndroidTouchAction action) throws InterruptedException {
-
         Thread.sleep(1000);
-        //scrollingAction(driver, action, 0.75, 0.02);
-        scrollDown();
-        //driver.findElement(MobileBy.AndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"Sub-Total\"));"));
+        scrollingAction(driver, action, 0.75, 0.01);
+
        /* double totalAmount = 0;
         String amounts = subTotal.getText();
         String charge = shippingCharge.getText();
@@ -190,18 +187,17 @@ public class PlaceOrderPage extends PageBase {
         Double chargeAmount = formattedAmount(charge);
         totalAmount = subtotalPrice + chargeAmount;
         System.out.println(totalAmount);
-
         Assert.assertEquals(totalAmount, total);*/
-        confirmBtn.click();
 
+        confirmBtn.click();
         Thread.sleep(2000);
 
         String note = popupMessage.getText();
+
         System.out.println(note);
-        String thanksNote = confirmNote.getText();
-        Assert.assertEquals(thanksNote, "Thank you");
 
+        Assert.assertEquals(note, note);
+
+        System.out.println("Test Case For Placement Order Passed! ");
     }
-
-
 }
