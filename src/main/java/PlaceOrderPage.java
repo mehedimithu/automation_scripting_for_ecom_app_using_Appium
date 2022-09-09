@@ -24,13 +24,14 @@ public class PlaceOrderPage extends PageBase {
     @FindBy(id = "com.nopstation.nopcommerce.nopstationcart:id/countrySpinner")
     WebElement countrySpinner;
 
-    @FindBy(xpath = "(//android.widget.TextView[@resource-id='android:id/text1'])[12]")
+    @FindBy(xpath = "(//android.widget.TextView)[12]")
     WebElement selectCountry;
     @FindBy(xpath = "//android.widget.LinearLayout[@index='4']")
     WebElement selectState;
     @FindBy(xpath = "//android.widget.TextView[@index='1']")
     WebElement otherState;
-    @FindBy(xpath = "(//android.widget.TextView)[6]")
+
+    @FindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.ListView/android.widget.TextView[3]")
     WebElement selectStateName;
 
     @FindBy(id = "com.nopstation.nopcommerce.nopstationcart:id/etCity")
@@ -90,30 +91,30 @@ public class PlaceOrderPage extends PageBase {
 
 
     public void guestMode(AndroidTouchAction action) {
-        waitForVisibility(checkoutBtnAsGuest);
-        click(checkoutBtnAsGuest);
+        // checkoutBtnAsGuest.click();
+        tabAction(checkoutBtnAsGuest, action);
 
     }
 
-    public void setAddress(AndroidTouchAction action) throws InterruptedException {
+    public void setAddress(AndroidTouchAction action, String firstName, String lastName, String email, String company, String city, String streetAddress, String streetAddress2, String zipCode, String phoneNumber) throws InterruptedException {
         clear(setFastName);
         tabAction(setFastName, action);
-        setFastName.sendKeys("Mehedi");
+        setFastName.sendKeys(firstName);
 
         clear(setLastName);
         tabAction(setLastName, action);
-        setLastName.sendKeys("Hasan");
+        setLastName.sendKeys(lastName);
 
         clear(setEmail);
         tabAction(setEmail, action);
-        setEmail.sendKeys("m.mehedi@riseuplabs.com");
+        setEmail.sendKeys(email);
         driver.hideKeyboard();
 
         tabAction(countrySpinner, action);
         driver.findElement(new MobileBy.ByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"Belgium\"));"));
         selectCountry.click();
 
-        Thread.sleep(2000);
+        Thread.sleep(2500);
 
         tabAction(selectState, action);
 
@@ -122,35 +123,36 @@ public class PlaceOrderPage extends PageBase {
             otherState.click();
         } else {
             driver.findElement(new MobileBy.ByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"Luxembourg\"));"));
-            selectStateName.click();
+           click(selectStateName);
+            //selectStateName.click();
         }
 
         driver.hideKeyboard();
 
         clear(setCompanyName);
 
-    tabAction(setCompanyName, action);
-        setCompanyName.sendKeys("Riseup Labs");
+        tabAction(setCompanyName, action);
+        setCompanyName.sendKeys(company);
         driver.hideKeyboard();
 
-    clear(setCityName);
+        clear(setCityName);
         tabAction(setCityName, action);
-        setCityName.sendKeys("Antwerpen");
+        setCityName.sendKeys(city);
         driver.hideKeyboard();
 
         clear(setStreetAddress);
         tabAction(setStreetAddress, action);
-        setStreetAddress.sendKeys("Antwerpen" + " " + "Belgium");
+        setStreetAddress.sendKeys(streetAddress);
         driver.hideKeyboard();
 
         clear(setZipCode);
         tabAction(setZipCode, action);
-        setZipCode.sendKeys("79070");
+        setZipCode.sendKeys(zipCode);
         driver.hideKeyboard();
 
         clear(setPhone);
         tabAction(setPhone, action);
-        setPhone.sendKeys("+3299795755");
+        setPhone.sendKeys(phoneNumber);
         driver.hideKeyboard();
 
         Thread.sleep(2000);
@@ -180,14 +182,16 @@ public class PlaceOrderPage extends PageBase {
         Thread.sleep(1000);
         scrollingAction(driver, action, 0.75, 0.01);
 
-       /* double totalAmount = 0;
+        double totalAmount = 0;
         String amounts = subTotal.getText();
         String charge = shippingCharge.getText();
         Double subtotalPrice = formattedAmount(amounts);
         Double chargeAmount = formattedAmount(charge);
         totalAmount = subtotalPrice + chargeAmount;
         System.out.println(totalAmount);
-        Assert.assertEquals(totalAmount, total);*/
+
+        String expectedResult =  total.getText();
+        Assert.assertEquals(totalAmount, formattedAmount(expectedResult));
 
         confirmBtn.click();
         Thread.sleep(2000);

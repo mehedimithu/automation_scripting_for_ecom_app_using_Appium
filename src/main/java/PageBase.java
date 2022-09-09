@@ -7,13 +7,16 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.ElementOption;
 import io.appium.java_client.touch.offset.PointOption;
+import org.json.simple.parser.ParseException;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.JsonReader;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
 
@@ -71,6 +74,7 @@ public class PageBase {
 //        ));
 
     }
+
 
     public void setText(WebElement element, String text) {
         waitForVisibility(element);
