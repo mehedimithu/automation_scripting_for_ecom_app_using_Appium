@@ -31,7 +31,7 @@ public class PlaceOrderPage extends PageBase {
     @FindBy(xpath = "//android.widget.TextView[@index='1']")
     WebElement otherState;
 
-    @FindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.ListView/android.widget.TextView[3]")
+    @FindBy(xpath = "(//android.widget.ListView//android.widget.TextView)[7]")
     WebElement selectStateName;
 
     @FindBy(id = "com.nopstation.nopcommerce.nopstationcart:id/etCity")

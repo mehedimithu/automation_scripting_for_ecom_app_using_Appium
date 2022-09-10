@@ -2,6 +2,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.Activity;
 import io.appium.java_client.android.AndroidTouchAction;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
+import io.appium.java_client.service.local.AppiumServiceBuilder;
 import org.openqa.selenium.DeviceRotation;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.AfterClass;
@@ -9,6 +10,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
@@ -27,12 +29,12 @@ public class TestBase {
     @BeforeClass
     public void Android_SetUp() throws MalformedURLException {
 
-      /*  service = new AppiumServiceBuilder()
+       service = new AppiumServiceBuilder()
                 .withAppiumJS(new File("/usr/local/lib/node_modules/appium/build/lib/main.js"))
                 .withIPAddress("127.0.0.1").usingPort(4723).build();
 
         //Appium Server start
-        service.start();*/
+        service.start();
 
         caps = new DesiredCapabilities();
 
@@ -56,6 +58,6 @@ public class TestBase {
     public void tearDown() {
         driver.quit();
         //Appium server stopped
-        //service.stop();
+        service.stop();
     }
 }
